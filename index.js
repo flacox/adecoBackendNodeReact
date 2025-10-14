@@ -6,6 +6,7 @@ import condominiosRoutes from "./routes/condominios.routes.js";
 import unidadesRoutes from "./routes/unidades.router.js";
 import bancosRoutes from "./routes/bancos.routes.js";
 import bancoCuentasRoutes from "./routes/bancoCuentas.routes.js";
+import homeRoutes from "./routes/home.routes.js";
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // RUTAS
+app.use("/api/home", homeRoutes);
 app.use("/api/usuarios", usuariosRoutes);
 app.use("/api/condominios", condominiosRoutes);
 app.use("/api/unidades", unidadesRoutes);
