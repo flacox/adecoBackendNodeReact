@@ -7,7 +7,8 @@ import unidadesRoutes from "./routes/unidades.router.js";
 import bancosRoutes from "./routes/bancos.routes.js";
 import bancoCuentasRoutes from "./routes/bancoCuentas.routes.js";
 import homeRoutes from "./routes/home.routes.js";
-
+import supplierRoutes from "./routes/suplidores.routes.js";
+ 
 dotenv.config();
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/condominios", condominiosRoutes);
 app.use("/api/unidades", unidadesRoutes);
 app.use("/api/bancos", bancosRoutes);
 app.use("/api/cuentas", bancoCuentasRoutes);
+app.use("/api/suplidores", supplierRoutes);
 
 const PORT = process.env.PORT;
 
