@@ -34,7 +34,7 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
     const {id} = req. params;
     const {company_name, contact_name, phone, email, address, rnc, service_type, status} = req.body;
-    db.query("UPDATE suppliers SET company_name = ?, contact_name = ?, phone, email = ?, address = ?, rnc = ?, service_type = ?, status = ? WHERE supplier_id = ?",
+    db.query("UPDATE suppliers SET company_name = ?, contact_name = ?, phone = ?, email = ?, address = ?, rnc = ?, service_type = ?, status = ? WHERE supplier_id = ?",
         [company_name, contact_name, phone, email, address, rnc, service_type, status, id],
         (err) => {
             if(err) return res.status(500).json(err);
