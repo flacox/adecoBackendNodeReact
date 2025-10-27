@@ -31,7 +31,7 @@ router.post("/", (req, res) => {
   const { account_number, id_bank, account_type, balance, currency, condo_id } = req.body;
   db.query(
     "INSERT INTO bank_accounts (account_number, id_bank, account_type, balance, currency, condo_id) VALUES (?, ?, ?, ?, ?, ?)",
-    [account_number, id_bank, account_type, balance, currency],
+    [account_number, id_bank, account_type, balance, currency, condo_id],
     (err, result) => {
       if (err) return res.status(500).json(err);
       res.json({
