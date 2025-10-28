@@ -4,8 +4,7 @@ import db from "../db.js";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  
-const queryListAll = `
+  const queryListAll = `
               SELECT 
               ba.id_account,
               ba.account_number,
@@ -18,9 +17,30 @@ const queryListAll = `
               c.nombre AS condo_nombre
               FROM bank_accounts AS ba
               INNER JOIN banks AS b ON ba.id_bank = b.id_bank
-              LEFT JOIN condominios AS c ON ba.condo_id = c.condo_id;`
+              LEFT JOIN condominios AS c ON ba.condo_id = c.condo_id;`;
 
   db.query(queryListAll, (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.json(result);
+  });
+});
+
+router.get("/:condo_id", (req, res) => {
+  const { condo_id } = req.params;
+  db.query(
+    `SELECT 
+  ba.id_account, 
+  b.name AS bank_name, 
+  ba.account_number,
+  ba.balance
+FROM 
+  bank_accounts ba
+INNER JOIN 
+  banks b ON ba.id_bank = b.id_bank
+WHERE 
+  ba.condo_id = ?;`,
+    [condo_id],
+    (err, result) => {
       if (err) return res.status(500).json(err);
       res.json(result);
     }
@@ -28,7 +48,8 @@ const queryListAll = `
 });
 
 router.post("/", (req, res) => {
-  const { account_number, id_bank, account_type, balance, currency, condo_id } = req.body;
+  const { account_number, id_bank, account_type, balance, currency, condo_id } =
+    req.body;
   db.query(
     "INSERT INTO bank_accounts (account_number, id_bank, account_type, balance, currency, condo_id) VALUES (?, ?, ?, ?, ?, ?)",
     [account_number, id_bank, account_type, balance, currency, condo_id],
@@ -49,7 +70,8 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-  const { account_number, id_bank, account_type, balance, currency, condo_id, } = req.body;
+  const { account_number, id_bank, account_type, balance, currency, condo_id } =
+    req.body;
   db.query(
     "UPDATE bank_accounts SET account_number = ?, id_bank = ?, account_type = ?, balance = ?, currency = ?, condo_id = ? WHERE id_account = ?",
     [account_number, id_bank, account_type, balance, currency, condo_id, id],

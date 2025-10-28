@@ -23,6 +23,15 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/:condo_id", (req, res) => {
+  const {condo_id} = req.params;
+  db.query(`SELECT id_petty_cash, current_balance FROM petty_cash WHERE condo_id = ?;`, [condo_id],
+    (err, result) => {
+      if(err) return res.status(500).json(err);
+      res.json(result);
+    })
+})
+
 router.post("/", (req, res) => {
   const { condo_id, initial_balance, current_balance } = req.body;
   db.query(
